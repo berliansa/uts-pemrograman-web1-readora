@@ -1,0 +1,268 @@
+/* =====================================
+   READORA - EDITORIAL MINIMALIST
+   ===================================== */
+
+:root {
+    --cream: #F8F5EF;
+    --beige: #E9DFD2;
+    --brown: #8B6F5C;
+    --dark-brown: #49382F;
+    --soft-brown: #BBA692;
+    --white: #FFFFFF;
+    --text: #51463F;
+    --border: #DDD1C4;
+}
+
+/* RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* GLOBAL */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--cream);
+    color: var(--text);
+}
+
+/* LOGIN CONTAINER */
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+/* LOGIN CARD */
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background-color: var(--white);
+    padding: 40px 35px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 25px rgba(73, 56, 47, 0.06);
+}
+
+/* HEADER */
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.brand-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--soft-brown);
+    font-weight: bold;
+}
+
+.login-header h1 {
+    font-family: Georgia, serif;
+    font-size: 38px;
+    color: var(--dark-brown);
+    margin: 12px 0;
+}
+
+.login-header p {
+    font-size: 14px;
+    color: var(--brown);
+    line-height: 1.6;
+}
+
+/* FORM */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: var(--dark-brown);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    outline: none;
+    font-size: 14px;
+    background-color: var(--cream);
+}
+
+.form-group input:focus {
+    border-color: var(--brown);
+    background-color: var(--white);
+}
+
+/* BUTTON */
+
+.btn-login {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 7px;
+    background-color: var(--brown);
+    color: var(--white);
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background-color: var(--dark-brown);
+}
+
+/* LOGIN LINKS */
+
+.login-links {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 13px;
+}
+
+.login-links button {
+    border: none;
+    background: none;
+    color: var(--brown);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-links p {
+    margin-top: 15px;
+}
+
+.login-links button:hover {
+    text-decoration: underline;
+}
+
+/* FOOTER */
+
+.login-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 30px;
+    padding-top: 18px;
+    text-align: center;
+}
+
+.login-footer p {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--soft-brown);
+}
+
+/* MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    background-color: rgba(49, 38, 30, 0.55);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--white);
+    padding: 35px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.modal-content h2 {
+    font-family: Georgia, serif;
+    color: var(--dark-brown);
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--brown);
+    margin-bottom: 22px;
+}
+
+/* CLOSE BUTTON */
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 17px;
+    border: none;
+    background: none;
+    color: var(--brown);
+    font-size: 27px;
+    cursor: pointer;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 480px) {
+
+    .login-card {
+        padding: 30px 22px;
+    }
+
+    .modal-content {
+        padding: 30px 22px;
+    }
+
+}
+
+/* RIWAYAT PERJALANAN TRACKING */
+.riwayat-perjalanan {
+    margin-top: 25px;
+}
+
+.riwayat-item {
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: var(--cream);
+    border-left: 3px solid var(--brown);
+    border-radius: 6px;
+}
+
+.riwayat-item p:first-child {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--brown);
+    margin-bottom: 5px;
+}
+
+.riwayat-item p:last-child {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.buku-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.gambar-buku {
+    width: 55px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+}

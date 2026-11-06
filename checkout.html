@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Readora</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .page-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-family: Georgia, serif;
+            color: var(--dark-brown);
+        }
+
+        .back-link {
+            color: var(--brown);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .checkout-card, .order-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .checkout-card h2, .order-card h2 {
+            font-family: Georgia, serif;
+            color: var(--dark-brown);
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--dark-brown);
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: var(--cream);
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 75px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .total-box {
+            background: var(--beige);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: var(--dark-brown);
+        }
+
+        .btn-submit {
+            background: var(--brown);
+            color: white;
+            border: none;
+            border-radius: 7px;
+            padding: 13px 20px;
+            font-weight: bold;
+        }
+
+        .btn-cancel {
+            background: var(--beige);
+            color: var(--dark-brown);
+            border: none;
+            border-radius: 7px;
+            padding: 13px 20px;
+            margin-left: 8px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        .order-table th, .order-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .order-table th {
+            background: var(--beige);
+            color: var(--dark-brown);
+        }
+
+        .btn-edit {
+            background: var(--beige);
+            color: var(--dark-brown);
+            border: none;
+            border-radius: 5px;
+            padding: 7px 10px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .page-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="page-container">
+
+        <header class="page-header">
+            <div>
+                <h1>Checkout & Pemesanan</h1>
+                <p>Kelola informasi pembelian buku Readora.</p>
+            </div>
+            <a href="dashboard.html" class="back-link">
+                ← Kembali ke Dashboard
+            </a>
+        </header>
+
+        <section class="checkout-card">
+            <h2>Formulir Pemesanan</h2>
+
+            <form id="formCheckout">
+                <input type="hidden" id="editOrderId">
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="namaPembeli">Nama Pembeli</label>
+                        <input type="text" id="namaPembeli" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailPembeli">Email</label>
+                        <input type="email" id="emailPembeli" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="alamatPembeli">Alamat Pengiriman</label>
+                        <textarea id="alamatPembeli" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pilihBuku">Pilih Buku</label>
+                        <select id="pilihBuku" required>
+                            <option value="">-- Pilih Buku --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jumlahBuku">Jumlah Buku</label>
+                        <input type="number" id="jumlahBuku" min="1" value="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="metodePembayaran">Metode Pembayaran</label>
+                        <select id="metodePembayaran" required>
+                            <option value="">-- Pilih Pembayaran --</option>
+                            <option value="Transfer Bank">Transfer Bank</option>
+                            <option value="E-Wallet">E-Wallet</option>
+                            <option value="COD">COD</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ekspedisi">Ekspedisi</label>
+                        <select id="ekspedisi" required>
+                            <option value="">-- Pilih Ekspedisi --</option>
+                            <option value="JNE">JNE</option>
+                            <option value="J&T">J&T</option>
+                            <option value="SiCepat">SiCepat</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jenisPaket">Jenis Paket</label>
+                        <select id="jenisPaket" required>
+                            <option value="">-- Pilih Paket --</option>
+                            <option value="Reguler">Reguler</option>
+                            <option value="Express">Express</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="total-box">
+                    <span>Total Pembayaran</span>
+                    <span id="totalHarga">Rp 0</span>
+                </div>
+
+                <button type="submit" class="btn-submit" id="btnSimpanPesanan">
+                    Simpan Pesanan
+                </button>
+
+                <button type="button" class="btn-cancel" id="btnBatalEdit" hidden>
+                    Batal Edit
+                </button>
+            </form>
+        </section>
+
+        <section class="order-card">
+            <h2>Daftar Laporan Pemesanan</h2>
+
+            <div class="table-wrapper">
+                <table class="order-table">
+                    <thead>
+                        <tr>
+                            <th>ID Pesanan</th>
+                            <th>Pembeli</th>
+                            <th>Buku</th>
+                            <th>Jumlah</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTable">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+    
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

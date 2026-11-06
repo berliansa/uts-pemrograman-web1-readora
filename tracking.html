@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking Pengiriman | Readora</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .page-container {
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-family: Georgia, serif;
+            color: var(--dark-brown);
+        }
+
+        .back-link {
+            color: var(--brown);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .search-card, .result-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .search-card h2, .result-card h2 {
+            font-family: Georgia, serif;
+            color: var(--dark-brown);
+            margin-bottom: 15px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-form input {
+            flex: 1;
+            min-width: 0;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: var(--cream);
+        }
+
+        .btn-search {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 7px;
+            background: var(--brown);
+            color: white;
+            font-weight: bold;
+        }
+
+        .result-card {
+            display: none;
+        }
+
+        .order-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin: 20px 0;
+        }
+
+        .info-item {
+            padding: 14px;
+            background: var(--cream);
+            border-radius: 8px;
+        }
+
+        .info-item span {
+            display: block;
+            font-size: 12px;
+            color: var(--brown);
+            margin-bottom: 6px;
+        }
+
+        .info-item strong {
+            color: var(--dark-brown);
+            font-size: 14px;
+        }
+
+        .status-title {
+            margin: 25px 0 15px;
+            color: var(--dark-brown);
+        }
+
+        .progress-list {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            position: relative;
+            margin: 25px 0;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-circle {
+            width: 30px;
+            height: 30px;
+            margin: 0 auto 9px;
+            border-radius: 50%;
+            background: var(--beige);
+            color: var(--brown);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .progress-step.active .progress-circle {
+            background: var(--brown);
+            color: white;
+        }
+
+        .progress-step p {
+            font-size: 11px;
+            color: var(--text);
+        }
+
+        .status-message {
+            padding: 13px;
+            background: var(--beige);
+            border-radius: 8px;
+            color: var(--dark-brown);
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px; /* Ditambah margin bawah biar ga nempel riwayat */
+        }
+
+        /* Styling tambahan untuk riwayat perjalanan agar rapi */
+        .riwayat-perjalanan {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .riwayat-perjalanan h3 {
+            font-family: Georgia, serif;
+            color: var(--dark-brown);
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .empty-message {
+            display: none;
+            color: #A34B42;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .page-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .order-info {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-step p {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="page-container">
+
+        <header class="page-header">
+            <div>
+                <h1>Tracking Pengiriman</h1>
+                <p>Pantau perjalanan pesanan buku Readora.</p>
+            </div>
+
+            <a href="dashboard.html" class="back-link">
+                ← Kembali ke Dashboard
+            </a>
+        </header>
+
+        <section class="search-card">
+            <h2>Cek Status Pesanan</h2>
+            <p>Masukkan nomor Delivery Order untuk melihat informasi pengiriman.</p>
+
+            <form id="trackingForm" class="search-form">
+                <input
+                    type="text"
+                    id="nomorDO"
+                    placeholder="Contoh: 20230012"
+                    required
+                >
+                <button type="submit" class="btn-search">Cari</button>
+            </form>
+
+            <p class="empty-message" id="pesanError">
+                Nomor pesanan tidak ditemukan. Silakan periksa kembali.
+            </p>
+        </section>
+
+        <!-- KOTAK HASIL TRACKING -->
+        <section class="result-card" id="hasilTracking">
+            <h2>Informasi Pesanan</h2>
+
+            <div class="order-info">
+                <div class="info-item">
+                    <span>Nomor Delivery Order</span>
+                    <strong id="hasilDO">-</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Nama Pembeli</span>
+                    <strong id="hasilNama">-</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Nama Buku</span>
+                    <strong id="hasilBuku">-</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Ekspedisi</span>
+                    <strong id="hasilEkspedisi">-</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Tanggal Pengiriman</span>
+                    <strong id="hasilTanggal">-</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Jenis Paket</span>
+                    <strong id="hasilPaket">-</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Total Pembayaran</span>
+                    <strong id="hasilTotal">-</strong>
+                </div>
+            </div>
+
+            <h3 class="status-title">Perkembangan Pengiriman</h3>
+
+            <div class="progress-list" id="progressList">
+                <div class="progress-step">
+                    <div class="progress-circle">1</div>
+                    <p>Pesanan Diterima</p>
+                </div>
+
+                <div class="progress-step">
+                    <div class="progress-circle">2</div>
+                    <p>Dikemas</p>
+                </div>
+
+                <div class="progress-step">
+                    <div class="progress-circle">3</div>
+                    <p>Dikirim</p>
+                </div>
+
+                <div class="progress-step">
+                    <div class="progress-circle">4</div>
+                    <p>Selesai</p>
+                </div>
+            </div>
+
+            <div class="status-message" id="statusPengiriman">
+                Status pesanan
+            </div>
+
+            <!-- BAGIAN RIWAYAT PAKET DISINI (Sebelum penutup </section>) -->
+            <div class="riwayat-perjalanan">
+                <h3>Riwayat Perjalanan Paket</h3>
+                <div id="hasilPerjalanan"></div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
